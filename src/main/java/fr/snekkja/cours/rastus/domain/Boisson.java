@@ -2,6 +2,7 @@ package fr.snekkja.cours.rastus.domain;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
@@ -80,6 +81,11 @@ public class Boisson {
 		} else if (!prix.equals(other.prix))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Boisson [identifiant=" + identifiant + ", nom=" + nom + ", prix=" + prix + "]";
 	}
 	
 }

@@ -1,23 +1,24 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<groupId>fr.snekkja.cours</groupId>
 	<artifactId>rastus</artifactId>
 	<version>0.1-SNAPSHOT</version>
-	
+
 	<packaging>war</packaging>
-	
+
 	<name>Rastus</name>
-	
+
 	<properties>
-	
+
+		<version.hibernate>5.1.0.Final</version.hibernate>
 		<version.java>1.8</version.java>
 		<version.javaee>7.0</version.javaee>
 		<version.junit>4.11</version.junit>
-	
+
 	</properties>
-	
+
 	<dependencies>
 
 		<!-- API Java EE -->
@@ -27,7 +28,7 @@
 			<version>${version.javaee}</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<!-- JUnit -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -35,13 +36,20 @@
 			<version>${version.junit}</version>
 			<scope>test</scope>
 		</dependency>
-	
+
+		<!-- Hibernate en mode JPA -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${version.hibernate}</version>
+		</dependency>
+
 	</dependencies>
-	
+
 	<build>
-	
+
 		<plugins>
-		
+
 			<!-- Plugin compiler -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -53,14 +61,14 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
-			
+
 			<!-- Plugin war -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.6</version>
 			</plugin>
-			
+
 			<!-- Plugin wildfly -->
 			<plugin>
 				<groupId>org.wildfly.plugins</groupId>
@@ -75,9 +83,9 @@
 					</execution>
 				</executions>
 			</plugin>
-		
+
 		</plugins>
-	
+
 	</build>
-	
+
 </project>

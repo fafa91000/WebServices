@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
@@ -14,6 +15,8 @@ import fr.snekkja.cours.rastus.domain.BoissonInexistanteException;
 @Stateless
 public class BoissonService {
 
+	private static Logger LOG = Logger.getLogger(BoissonService.class.getName());
+	
 	/** Liste des boissons mockées */
 	private List<Boisson> boissons;
 
@@ -63,6 +66,33 @@ public class BoissonService {
 			final String message = MessageFormat.format("Il n''existe pas de boisson d''identifiant {0}.", identifiant);
 			throw new BoissonInexistanteException(message);
 		}
+		
+	}
+	
+	public void creerBoisson(final Boisson boisson)
+	{
+		boissons.add(boisson);
+		
+		LOG.info(boissons.toString());
+	}
+	
+	public void modifierBoisson(final Boisson boisson) throws BoissonInexistanteException
+	{
+	
+		final Boisson ancienneBoisson = boissons.stream().filter(b -> b.getIdentifiant() == boisson.getIdentifiant()).findAny().orElse(null);
+		
+		if (ancienneBoisson == null)
+		{
+			final String message = MessageFormat.format("Il n''existe pas de boisson d''identifiant {0}.", boisson.getIdentifiant());
+			throw new BoissonInexistanteException(message);
+		}
+		else
+		{
+			boissons.remove(ancienneBoisson);
+			boissons.add(boisson);
+		}
+		
+		LOG.info(boissons.toString());
 		
 	}
 
