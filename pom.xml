@@ -12,6 +12,7 @@
 
 	<properties>
 
+		<version.mysql-driver>5.1.38</version.mysql-driver>
 		<version.hibernate>5.1.0.Final</version.hibernate>
 		<version.java>1.8</version.java>
 		<version.javaee>7.0</version.javaee>
@@ -42,6 +43,13 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>${version.hibernate}</version>
+		</dependency>
+
+		<!-- MySQL JDBC Driver -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${version.mysql-driver}</version>
 		</dependency>
 
 	</dependencies>

@@ -1,31 +1,29 @@
-package fr.snekkja.cours.rastus.domain;
+package fr.snekkja.cours.rastus.entite;
 
-import java.math.BigDecimal;
+import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
-public class Boisson {
+@Entity(name = "Boisson")
+@Table(name = "T_BOISSON")
+public class BoissonJpaEntite implements Serializable
+{
 
+	private static final long serialVersionUID = 1;
+	
 	private int identifiant;
 	
 	private String nom;
 	
-	private BigDecimal prix;
+	private double prix;
 
-	public Boisson() {
-		super();
-	}
-	
-	public Boisson(int identifiant, String nom, BigDecimal prix) {
-		super();
-		this.identifiant = identifiant;
-		this.nom = nom;
-		this.prix = prix;
-	}
-
+	@Id
+	@GeneratedValue
+	@Column(name = "BOI_ID")
 	public int getIdentifiant() {
 		return identifiant;
 	}
@@ -34,6 +32,7 @@ public class Boisson {
 		this.identifiant = identifiant;
 	}
 
+	@Column(name = "BOI_NOM")
 	public String getNom() {
 		return nom;
 	}
@@ -42,11 +41,12 @@ public class Boisson {
 		this.nom = nom;
 	}
 
-	public BigDecimal getPrix() {
+	@Column(name = "BOI_PRIX")
+	public double getPrix() {
 		return prix;
 	}
 
-	public void setPrix(BigDecimal prix) {
+	public void setPrix(double prix) {
 		this.prix = prix;
 	}
 
@@ -56,7 +56,9 @@ public class Boisson {
 		int result = 1;
 		result = prime * result + identifiant;
 		result = prime * result + ((nom == null) ? 0 : nom.hashCode());
-		result = prime * result + ((prix == null) ? 0 : prix.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(prix);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
 
@@ -68,7 +70,7 @@ public class Boisson {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Boisson other = (Boisson) obj;
+		BoissonJpaEntite other = (BoissonJpaEntite) obj;
 		if (identifiant != other.identifiant)
 			return false;
 		if (nom == null) {
@@ -76,17 +78,9 @@ public class Boisson {
 				return false;
 		} else if (!nom.equals(other.nom))
 			return false;
-		if (prix == null) {
-			if (other.prix != null)
-				return false;
-		} else if (!prix.equals(other.prix))
+		if (Double.doubleToLongBits(prix) != Double.doubleToLongBits(other.prix))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Boisson [identifiant=" + identifiant + ", nom=" + nom + ", prix=" + prix + "]";
 	}
 	
 }

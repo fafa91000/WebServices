@@ -12,8 +12,10 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
 
 import fr.snekkja.cours.rastus.domain.Boisson;
+import fr.snekkja.cours.rastus.domain.BoissonDejaExistanteException;
 import fr.snekkja.cours.rastus.domain.BoissonInexistanteException;
 import fr.snekkja.cours.rastus.service.BoissonService;
 
@@ -46,14 +48,25 @@ public class BoissonWebService {
 	}
 	
 	@PUT
-	public void creerBoisson(
-			@FormParam(value = "id") final int identifiant,
+	public Response creerBoisson(
 			@FormParam(value = "nom") final String nom,
 			@FormParam(value = "prix") final double prix)
 	{
-		final Boisson boisson = new Boisson(identifiant, nom, BigDecimal.valueOf(prix));
 		
-		boissonService.creerBoisson(boisson);
+		Response reponse;
+		
+		final Boisson boisson = new Boisson();
+		boisson.setNom(nom);
+		boisson.setPrix(BigDecimal.valueOf(prix));
+		
+		try {
+			boissonService.creerBoisson(boisson);
+			reponse = Response.ok().build();
+		} catch (BoissonDejaExistanteException e) {
+			reponse = Response.status(409).build();
+		}
+		
+		return reponse;
 	}
 	
 	@POST
