@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>fr.snekkja.cours</groupId>
-	<artifactId>rastus</artifactId>
+	<artifactId>webservices</artifactId>
 	<version>0.1-SNAPSHOT</version>
 
 	<packaging>war</packaging>
@@ -12,11 +12,14 @@
 
 	<properties>
 
-		<version.mysql-driver>5.1.38</version.mysql-driver>
-		<version.hibernate>5.1.0.Final</version.hibernate>
+		<version.commons-lang>3.4</version.commons-lang>
 		<version.java>1.8</version.java>
 		<version.javaee>7.0</version.javaee>
 		<version.junit>4.11</version.junit>
+
+		<version.plugin.compiler>3.3</version.plugin.compiler>
+		<version.plugin.war>2.6</version.plugin.war>
+		<version.plugin.wildfly>1.1.0.Alpha5</version.plugin.wildfly>
 
 	</properties>
 
@@ -37,19 +40,12 @@
 			<version>${version.junit}</version>
 			<scope>test</scope>
 		</dependency>
-
-		<!-- Hibernate en mode JPA -->
+		
+		<!-- Commons Lang -->
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>${version.hibernate}</version>
-		</dependency>
-
-		<!-- MySQL JDBC Driver -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>${version.mysql-driver}</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${version.commons-lang}</version>
 		</dependency>
 
 	</dependencies>
@@ -62,7 +58,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.3</version>
+				<version>${version.plugin.compiler}</version>
 				<configuration>
 					<source>${version.java}</source>
 					<target>${version.java}</target>
@@ -74,14 +70,14 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>2.6</version>
+				<version>${version.plugin.war}</version>
 			</plugin>
 
 			<!-- Plugin wildfly -->
 			<plugin>
 				<groupId>org.wildfly.plugins</groupId>
 				<artifactId>wildfly-maven-plugin</artifactId>
-				<version>1.1.0.Alpha5</version>
+				<version>${version.plugin.wildfly}</version>
 				<executions>
 					<execution>
 						<phase>install</phase>
@@ -90,6 +86,12 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<hostname>192.168.99.100</hostname>
+					<port>9990</port>
+					<username>admin</username>
+					<password>admin</password>
+				</configuration>
 			</plugin>
 
 		</plugins>
